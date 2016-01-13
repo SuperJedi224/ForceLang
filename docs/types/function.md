@@ -14,6 +14,8 @@ A function call uses the following syntax:
 
 Additionally, some functions can be called without arguments. The syntax used here looks like this:
 
-`<function>()`
+```
+<function>()
+```
 
 All `Function` instances are immutable.
