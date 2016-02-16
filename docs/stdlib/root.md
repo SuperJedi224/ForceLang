@@ -57,7 +57,7 @@ A no-op used as a marker for the `goto` and `gotoex` instructions. The argument 
 goto <name>
 ```
 
-Jumps to the specified label.  The argument is a bareword and goes unevaluated.
+Jumps to the specified label.  The argument is a bareword and goes unevaluated. Throws an exception if no such label exists.
 
 **Function root.gotoex**
 
@@ -65,7 +65,7 @@ Jumps to the specified label.  The argument is a bareword and goes unevaluated.
 gotoex <name>
 ```
 
-As goto, but evaluates the argument first and uses the result as the label name.
+As goto, but evaluates the argument first and uses the result as the label name. Throws an exception if no such label exists.
 
 **Constant root.nil**
 
