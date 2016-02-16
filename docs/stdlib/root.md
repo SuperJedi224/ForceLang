@@ -75,6 +75,14 @@ if <value>
 
 If `value` evaluates to falsy, skips the next line of the program
 
+**Function require**
+
+```
+require <module>
+```
+
+Attempts to locate the Java class of the specified name and invoke it as a module provider. The module name is a bareword and is not evaluated. On success, returns the instantiated Module object. On failure, throws an exception.
+
 **Constant root.nil**
 
 The null object.
