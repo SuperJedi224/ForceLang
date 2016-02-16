@@ -67,6 +67,14 @@ gotoex <name>
 
 As goto, but evaluates the argument first and uses the result as the label name. Throws an exception if no such label exists.
 
+**Function if**
+
+```
+if <value>
+```
+
+If `value` evaluates to falsy, skip the next line of the program
+
 **Constant root.nil**
 
 The null object.
