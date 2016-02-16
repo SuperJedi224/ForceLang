@@ -33,6 +33,8 @@ set <field> <value>
 
 Sets the specified field to the specified value. Attempting to set an immutable field, or any field of an immutable object, throws an exception.
 
+**Function root.cons**
+
 ```
 cons <field> <value>
 ```
@@ -41,21 +43,23 @@ Sets the specified field to the specified value. Attempting to set an immutable 
 
 Then, marks that field as immutable.
 
-**Function label**
+**Function root.label**
 
 ```
 label <name>
 ```
 
-A no-op used as a marker for the `goto` and `gotoex` instructions. The argument is a bareword and goes unevaluated.
+A no-op used as a marker for the `goto` and `gotoex` instructions. The argument is a bareword and goes unevaluated. Must be the only function call on the line to work.
 
-**Function goto**
+**Function root.goto**
 
 ```
 goto <name>
 ```
 
 Jumps to the specified label.  The argument is a bareword and goes unevaluated.
+
+**Function root.gotoex**
 
 ```
 gotoex <name>
