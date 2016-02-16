@@ -73,7 +73,7 @@ As goto, but evaluates the argument first and uses the result as the label name.
 if <value>
 ```
 
-If `value` evaluates to falsy, skip the next line of the program
+If `value` evaluates to falsy, skips the next line of the program
 
 **Constant root.nil**
 
