@@ -81,7 +81,7 @@ If `value` evaluates to falsy, skips the next line of the program
 require <module>
 ```
 
-Attempts to locate the Java class of the specified name and invoke it as a module provider. The module name is a bareword and is not evaluated. On success, returns the instantiated Module object. On failure, throws an exception.
+Attempts to locate the specified module initializer (In the reference implementation, module initializers are java classes with the method `public static void load(Module m)`), if it exists; then uses it to initialize a `Module` object which is then returned.
 
 **Constant root.nil**
 
