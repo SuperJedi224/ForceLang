@@ -81,7 +81,7 @@ If `value` evaluates to falsy, skips the next line of the program
 require <module>
 ```
 
-Attempts to locate the specified module initializer (In the reference implementation, module initializers are java classes with the method `public static void load(Module m)`), if it exists; then uses it to initialize a `Module` object which is then returned.
+Attempts to locate the specified module initializer (In the reference implementation, module initializers are java classes with the method `public static void load(Module m)`), if it exists; then uses it to initialize a `Module` object which is then returned. If such an initializer is not found, or initialization fails, a `NoSuchModule` exception is thrown.
 
 **Constant root.nil**
 
