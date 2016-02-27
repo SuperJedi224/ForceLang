@@ -25,6 +25,12 @@ root.random
 See `random.md`
 
 
+```
+root.string
+```
+
+See `string.md`
+
 **Function root.set**
 
 ```
