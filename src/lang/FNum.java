@@ -19,6 +19,7 @@ public class FNum extends FObj implements Comparable<FNum>{
 		return !equals(ZERO);
 	}
 	public FObj add(FObj o){
+		if(o==null)return this;
 		if(o instanceof FNum){
 			return add((FNum)o);
 		}
