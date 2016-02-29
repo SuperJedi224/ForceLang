@@ -31,6 +31,12 @@ root.string
 
 See `string.md`
 
+```
+root.gui
+```
+
+See `gui.md`
+
 **Function root.set**
 
 ```
