@@ -32,6 +32,14 @@ io.readln()
 
 Returns a line of text read from stdin.
 
+**Function io.readnum**
+
+```
+io.readnum()
+```
+
+Reads and returns a number from stdin.
+
 **Function io.freader**
 
 ```
