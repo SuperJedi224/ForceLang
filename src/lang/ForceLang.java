@@ -87,7 +87,14 @@ public final class ForceLang{
 	public static int iPointer;
 	public static void main(String[]args) throws FileNotFoundException{
 		StdLib.load();
-		Scanner freader=new Scanner(new File(input.nextLine()));
+		String fname="";
+		if(args.length>0){
+			fname=args[0];
+		}else{
+			fname=input.nextLine();
+		}
+		
+		Scanner freader=new Scanner(new File(fname));
 		while(freader.hasNext())prog.add(freader.nextLine().replaceAll("^\\s+",""));
 		freader.close();
 		iPointer=0;
