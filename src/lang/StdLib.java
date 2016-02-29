@@ -99,6 +99,9 @@ public class StdLib {
 		io.setMethod("readln",a->{
 			return new FString(ForceLang.input);
 		});
+		io.setMethod("readnum",a->{
+			return new FNum(ForceLang.input.nextLine());
+		});
 		io.setMethod("freader",a->{
 			Object o=ForceLang.parse(a);
 			if(o instanceof FString){
