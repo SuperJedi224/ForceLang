@@ -37,7 +37,7 @@ See `string.md`
 set <field> <value>
 ```
 
-Sets the specified field to the specified value. Attempting to set an immutable field, or any field of an immutable object, throws an exception.
+Sets the specified field to the specified value. Attempting to set an immutable field, or any field of an immutable object, throws an exception. You can also set a position in a list by using `<list>[<index>]` as the field argument.
 
 **Function root.cons**
 
