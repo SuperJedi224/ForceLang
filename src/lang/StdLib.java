@@ -1,13 +1,19 @@
 package lang;
 
-import lang.exceptions.*;
-import lang.exceptions.IllegalArgumentException;
-
-import java.lang.Exception;
-import java.lang.reflect.InvocationTargetException;
 import java.math.BigInteger;
 import java.util.List;
 import java.util.Random;
+
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+
+import lang.exceptions.IllegalArgumentException;
+import lang.exceptions.IllegalInvocationException;
+import lang.exceptions.NamespaceNotFoundException;
+import lang.exceptions.NoSuchLabelException;
+import lang.exceptions.NoSuchModuleException;
 
 public class StdLib {
 	private static Random rand=new Random();
@@ -17,6 +23,7 @@ public class StdLib {
 		Namespace io=Namespace.byName("root.io");
 		Namespace random=Namespace.byName("root.random");
 		Namespace string=Namespace.byName("root.string");
+		Namespace gui=Namespace.byName("root.gui");
 		string.setMethod("builder",a->{
 			FStringBuilder s=new FStringBuilder();
 			if(a!=null)s.add(ForceLang.parse(a));
@@ -155,7 +162,8 @@ public class StdLib {
 		});
 		root.setMethod("require",a->{
 			try{FObj object=new Module();
-			Class<?>clazz=Class.forName(a);
+			Class<?>clazz=null;
+			try{clazz=Class.forName(a);}catch(Exception e){clazz=Class.forName(a+".Main");}
 			clazz.getMethod("load",FObj.class).invoke(null,object);
 			object.setImmutable();
 			return object;}catch(Exception e){
@@ -166,6 +174,23 @@ public class StdLib {
 			if(!FBool.valueOf(ForceLang.parse(a)).isTruthy())ForceLang.iPointer++;
 			return null;
 		});
-		math.setImmutable();random.setImmutable();io.setImmutable();string.setImmutable();
+		gui.setMethod("show",a->{
+			JFrame j=new JFrame();
+			j.setAlwaysOnTop(true);
+			JOptionPane.showMessageDialog(j,ForceLang.stringify(ForceLang.parse(a)),"",JOptionPane.INFORMATION_MESSAGE);
+			return null;
+		});
+		gui.setMethod("warn",a->{
+			JFrame j=new JFrame();
+			j.setAlwaysOnTop(true);
+			JOptionPane.showMessageDialog(j,ForceLang.stringify(ForceLang.parse(a)),"",JOptionPane.WARNING_MESSAGE);
+			return null;
+		});
+		gui.setMethod("prompt",a->{
+			JFrame j=new JFrame();
+			j.setAlwaysOnTop(true);
+			return new FString(JOptionPane.showInputDialog(j, a==null?"":ForceLang.stringify(ForceLang.parse(a))));
+		});
+		math.setImmutable();random.setImmutable();io.setImmutable();string.setImmutable();gui.setImmutable();
 	}
 }
