@@ -19,7 +19,7 @@ public class FNum extends FObj implements Comparable<FNum>{
 		return !equals(ZERO);
 	}
 	public FObj add(FObj o){
-		if(o==null)return this;
+		/*if(o==null)return this;*/
 		if(o instanceof FNum){
 			return add((FNum)o);
 		}
@@ -72,9 +72,18 @@ public class FNum extends FObj implements Comparable<FNum>{
 		if(!r.equals(BigInteger.ZERO)){n=n.divide(r);d=d.divide(r);}
 		this.n=n;
 		this.d=d;
+	}
+	{
 		set("toString",new Function(a->{
 			if(a==null)return new FString(toString());
 			return new FString(toString(Integer.parseInt(a)));
+		}));
+		set("mult",new Function(a->{
+			FObj o=ForceLang.parse(a);
+			if(o instanceof FNum){
+				return this.multiply((FNum)o);
+			}
+			throw new IllegalArgumentException("");
 		}));
 	}
 	public String toString(){
