@@ -166,12 +166,6 @@ public class StdLib {
 			if(!FBool.valueOf(ForceLang.parse(a)).isTruthy())ForceLang.iPointer++;
 			return null;
 		});
-		string.setMethod("builder",a->{
-			if(a==null)return new FStringBuilder();
-			FStringBuilder f=new FStringBuilder();
-			f.add(ForceLang.parse(a));
-			return f;
-		});
 		math.setImmutable();random.setImmutable();io.setImmutable();string.setImmutable();
 	}
 }
