@@ -9,4 +9,7 @@ public class FList extends FObj{
 			return new FString(list.toString());
 		}));
 	}
+	public void append(FObj f){
+		list.add(f);
+	}
 }
