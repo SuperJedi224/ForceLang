@@ -164,10 +164,10 @@ public class StdLib {
 			throw new NoSuchLabelException(a);
 		});
 		root.setMethod("require",a->{
-			try{FObj object=new Module();
+			try{Module object=new Module();
 			Class<?>clazz=null;
 			try{clazz=Class.forName(a);}catch(Exception e){clazz=Class.forName(a+".Main");}
-			clazz.getMethod("load",FObj.class).invoke(null,object);
+			clazz.getMethod("load",Module.class).invoke(null,object);
 			object.setImmutable();
 			return object;}catch(Exception e){
 				throw new NoSuchModuleException(a);
