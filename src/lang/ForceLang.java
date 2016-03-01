@@ -36,6 +36,10 @@ public final class ForceLang{
 			
 			if(o!=null&&o instanceof Function){
 				return ((Function)o).apply(x.substring(j+1),parse(x.substring(0,x.substring(0,j).lastIndexOf("."))));
+			}else if(o!=null&&o instanceof Module){
+				FObj o2=o.get("._invoke");
+				if(o2==null||!(o2 instanceof Function))throw new IllegalInvocationException("This module is non-invocable");
+				return ((Function)o2).apply(x.substring(j+1),o);
 			}else{
 				throw new IllegalInvocationException(x.substring(0,j)+" is not a function.");
 			}
@@ -70,8 +74,15 @@ public final class ForceLang{
 			x="root."+x;
 			x=x.substring(0,x.length()-2);
 			FObj o=parse(x);
-			if(o!=null&&o instanceof Function){
+			if(o==null){throw new IllegalInvocationException("null is not a function.");}
+			else if(o instanceof Function){
 				return ((Function)o).apply(null,parse(x.substring(0,x.lastIndexOf("."))));
+			}else if(o instanceof Module){
+				FObj o2=o.get("._invoke");
+				if(o2!=null&&o2 instanceof Function){
+					return ((Function)o2).apply(null,o);
+				}
+				throw new IllegalInvocationException("This module is non-invocable.");
 			}else{
 				throw new IllegalInvocationException(x+" is not a function.");
 			}
