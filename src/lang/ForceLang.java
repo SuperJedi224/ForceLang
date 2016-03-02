@@ -34,7 +34,6 @@ public final class ForceLang{
 		if(x.contains(" ")){
 			int j=x.indexOf(" ");
 			String x2=x.substring(0,j);
-			while(defs.containsKey(x2))x2=defs.get(x2);
 			FObj o3=parse(x2);
 			
 			if(o3!=null&&o3 instanceof Function){
