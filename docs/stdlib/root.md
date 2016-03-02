@@ -103,6 +103,14 @@ def <expression> <newexpression>
 
 Redefines the first expression such that every time the parser evaluates that expression exactly it will implicitly evaluate the other expression instead. Should be used sparingly.
 
+**Function undef**
+
+```
+undef <expression>
+```
+
+If the specified expression has been redefined using the `def` instruction, undo the redefinition so that the expression is once again evaluated normally.
+
 **Constant root.nil**
 
 The null object.
