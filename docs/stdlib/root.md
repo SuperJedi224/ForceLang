@@ -95,6 +95,14 @@ require <module>
 
 Attempts to locate the specified module initializer (In the reference implementation, module initializers are java classes with the method `public static void load(Module m)`), if it exists; then uses it to initialize a `Module` object which is then returned. If such an initializer is not found, or initialization fails, a `NoSuchModule` exception is thrown.
 
+**Function def**
+
+```
+def <expression> <newexpression>
+```
+
+Redefines the first expression such that every time the parser evaluates that expression exactly it will implicitly evaluate the other expression instead. Should be used sparingly.
+
 **Constant root.nil**
 
 The null object.
