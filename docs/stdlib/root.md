@@ -79,7 +79,7 @@ gotoex <name>
 
 As goto, but evaluates the argument first and uses the result as the label name. Throws an exception if no such label exists.
 
-**Function if**
+**Function root.if**
 
 ```
 if <value>
@@ -87,7 +87,7 @@ if <value>
 
 If `value` evaluates to falsy, skips the next line of the program
 
-**Function require**
+**Function root.require**
 
 ```
 require <module>
@@ -95,7 +95,7 @@ require <module>
 
 Attempts to locate the specified module initializer (In the reference implementation, module initializers are java classes with the method `public static void load(Module m)`), if it exists; then uses it to initialize a `Module` object which is then returned. If such an initializer is not found, or initialization fails, a `NoSuchModule` exception is thrown.
 
-**Function def**
+**Function root.def**
 
 ```
 def <expression> <newexpression>
@@ -103,7 +103,7 @@ def <expression> <newexpression>
 
 Redefines the first expression such that every time the parser evaluates that expression exactly it will implicitly evaluate the other expression instead. Should be used sparingly.
 
-**Function undef**
+**Function root.undef**
 
 ```
 undef <expression>
