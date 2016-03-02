@@ -35,16 +35,14 @@ public final class ForceLang{
 			int j=x.indexOf(" ");
 			String x2=x.substring(0,j);
 			while(defs.containsKey(x2))x2=defs.get(x2);
-			if(x2.indexOf(".")==-1)x2="root."+x2;
-			int q=x2.lastIndexOf(".");
-			FObj o3=parse(x2.substring(0,q)),o=o3.get(x2.substring(q+1));
+			FObj o3=parse(x2);
 			
-			if(o!=null&&o instanceof Function){
-				return ((Function)o).apply(x.substring(j+1),o3);
-			}else if(o!=null&&o instanceof Module){
-				FObj o2=o.get("._invoke");
+			if(o3!=null&&o3 instanceof Function){
+				return ((Function)o3).apply(x.substring(j+1));
+			}else if(o3!=null&&o3 instanceof Module){
+				FObj o2=o3.get("._invoke");
 				if(o2==null||!(o2 instanceof Function))throw new IllegalInvocationException("This module is non-invocable");
-				return ((Function)o2).apply(x.substring(j+1),o3);
+				return ((Function)o2).apply(x.substring(j+1));
 			}else{
 				throw new IllegalInvocationException(x.substring(0,j)+" is not a function.");
 			}
@@ -77,17 +75,14 @@ public final class ForceLang{
 		try{return new FNum(x);}catch(Exception e){};
 		if(x.endsWith("()")){			
 			x=x.substring(0,x.length()-2);
-			while(defs.containsKey(x))x=defs.get(x);
-			if(x.indexOf(".")==-1)x="root."+x;
-			int q=x.lastIndexOf(".");
-			FObj o2=parse(x.substring(0,q)),o=o2.get(x.substring(q+1));
-			if(o==null){throw new IllegalInvocationException("null is not a function.");}
-			else if(o instanceof Function){
-				return ((Function)o).apply(null,o2);
+			FObj o2=parse(x);
+			if(o2==null){throw new IllegalInvocationException("null is not a function.");}
+			else if(o2 instanceof Function){
+				return ((Function)o2).apply(null);
 			}else if(o2 instanceof Module){
 				FObj o3=o2.get("._invoke");
 				if(o3!=null&&o3 instanceof Function){
-					return ((Function)o3).apply(null,o);
+					return ((Function)o3).apply(null);
 				}
 				throw new IllegalInvocationException("This module is non-invocable.");
 			}else{
