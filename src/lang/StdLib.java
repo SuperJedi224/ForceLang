@@ -182,6 +182,10 @@ public class StdLib {
 			ForceLang.defs.put(a.substring(0,i),a.substring(i+1));
 			return null;
 		});
+		root.setMethod("undef",a->{
+			ForceLang.defs.remove(a);
+			return null;
+		});
 		gui.setMethod("show",a->{
 			JFrame j=new JFrame();
 			j.setAlwaysOnTop(true);
