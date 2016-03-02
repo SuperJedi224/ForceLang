@@ -12,6 +12,7 @@ import java.lang.Exception;
 
 
 public final class ForceLang{
+	public static final Map<String,String>defs=new HashMap<>();
 	public static final Scanner input=new Scanner(System.in);
 	public static String stringify(Object o){
 		if(o==null)return "<nil>";
@@ -19,6 +20,7 @@ public final class ForceLang{
 	}
 	public static Namespace root=new Namespace("root",null){{set("root",this);immutableFields.add("root");}};
 	public static FObj parse(String x){
+		while(defs.containsKey(x))x=defs.get(x);
 		if(x.startsWith("!")){
 			FObj o=parse(x.substring(1));
 			return FBool.valueOf(!o.isTruthy());
@@ -30,16 +32,19 @@ public final class ForceLang{
 			return new FString(x.replaceAll("^.|.$",""));
 		}
 		if(x.contains(" ")){
-			x="root."+x;
 			int j=x.indexOf(" ");
-			FObj o=parse(x.substring(0,j));
+			String x2=x.substring(0,j);
+			while(defs.containsKey(x2))x2=defs.get(x2);
+			if(x2.indexOf(".")==-1)x2="root."+x2;
+			int q=x2.lastIndexOf(".");
+			FObj o3=parse(x2.substring(0,q)),o=o3.get(x2.substring(q+1));
 			
 			if(o!=null&&o instanceof Function){
-				return ((Function)o).apply(x.substring(j+1),parse(x.substring(0,x.substring(0,j).lastIndexOf("."))));
+				return ((Function)o).apply(x.substring(j+1),o3);
 			}else if(o!=null&&o instanceof Module){
 				FObj o2=o.get("._invoke");
 				if(o2==null||!(o2 instanceof Function))throw new IllegalInvocationException("This module is non-invocable");
-				return ((Function)o2).apply(x.substring(j+1),o);
+				return ((Function)o2).apply(x.substring(j+1),o3);
 			}else{
 				throw new IllegalInvocationException(x.substring(0,j)+" is not a function.");
 			}
@@ -70,22 +75,28 @@ public final class ForceLang{
 			return ForceLang.parse(x.substring(0,i)).add(ForceLang.parse(x.substring(i+1)));
 		}
 		try{return new FNum(x);}catch(Exception e){};
-		if(x.endsWith("()")){
-			x="root."+x;
+		if(x.endsWith("()")){			
 			x=x.substring(0,x.length()-2);
-			FObj o=parse(x);
+			while(defs.containsKey(x))x=defs.get(x);
+			if(x.indexOf(".")==-1)x="root."+x;
+			int q=x.lastIndexOf(".");
+			FObj o2=parse(x.substring(0,q)),o=o2.get(x.substring(q+1));
 			if(o==null){throw new IllegalInvocationException("null is not a function.");}
 			else if(o instanceof Function){
-				return ((Function)o).apply(null,parse(x.substring(0,x.lastIndexOf("."))));
-			}else if(o instanceof Module){
-				FObj o2=o.get("._invoke");
-				if(o2!=null&&o2 instanceof Function){
-					return ((Function)o2).apply(null,o);
+				return ((Function)o).apply(null,o2);
+			}else if(o2 instanceof Module){
+				FObj o3=o2.get("._invoke");
+				if(o3!=null&&o3 instanceof Function){
+					return ((Function)o3).apply(null,o);
 				}
 				throw new IllegalInvocationException("This module is non-invocable.");
 			}else{
 				throw new IllegalInvocationException(x+" is not a function.");
 			}
+		}
+		if(x.matches("([A-z]+\\.)+[A-z]+")){
+			int i=x.lastIndexOf(".");
+			return parse(x.substring(0,i)).get(x.substring(i+1));
 		}
 		String[]nms=x.split("\\.");
 		FObj n=Namespace.byName("root");

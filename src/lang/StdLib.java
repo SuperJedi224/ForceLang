@@ -177,6 +177,11 @@ public class StdLib {
 			if(!FBool.valueOf(ForceLang.parse(a)).isTruthy())ForceLang.iPointer++;
 			return null;
 		});
+		root.setMethod("def",a->{
+			int i=a.indexOf(" ");
+			ForceLang.defs.put(a.substring(0,i),a.substring(i+1));
+			return null;
+		});
 		gui.setMethod("show",a->{
 			JFrame j=new JFrame();
 			j.setAlwaysOnTop(true);
