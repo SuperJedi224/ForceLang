@@ -88,7 +88,7 @@ public final class ForceLang{
 				throw new IllegalInvocationException(x+" is not a function.");
 			}
 		}
-		if(x.matches("([A-z]+\\.)+[A-z]+")){
+		if(x.matches("([_$A-z0-9]+\\.)+[_$A-z0-9]+")){
 			int i=x.lastIndexOf(".");
 			return parse(x.substring(0,i)).get(x.substring(i+1));
 		}
