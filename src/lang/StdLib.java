@@ -24,6 +24,7 @@ public class StdLib {
 		Namespace random=Namespace.byName("root.random");
 		Namespace string=Namespace.byName("root.string");
 		Namespace gui=Namespace.byName("root.gui");
+		Namespace timer=Namespace.byName("root.timer");
 		string.setMethod("builder",a->{
 			FStringBuilder s=new FStringBuilder();
 			if(a!=null)s.add(ForceLang.parse(a));
@@ -203,6 +204,7 @@ public class StdLib {
 			j.setAlwaysOnTop(true);
 			return new FString(JOptionPane.showInputDialog(j, a==null?"":ForceLang.stringify(ForceLang.parse(a))));
 		});
-		math.setImmutable();random.setImmutable();io.setImmutable();string.setImmutable();gui.setImmutable();
+		timer.setMethod("new",a->new FTimer());
+		math.setImmutable();random.setImmutable();io.setImmutable();string.setImmutable();gui.setImmutable();timer.setImmutable();
 	}
 }
