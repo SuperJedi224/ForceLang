@@ -112,24 +112,27 @@ public class FNum extends FObj implements Comparable<FNum>{
 	 */
 	public FNum(String val) {
 		String[] i=val.split("/");
-		BigInteger x,y;
+		FNum x,y;
 		if(i.length==1){
 			if(val.indexOf("%")!=-1){
-				x=new BigInteger(i[0].substring(0,i[0].length()-1));
-				y=BigInteger.valueOf(100);
+				x=new FNum(new BigInteger(i[0].substring(0,i[0].length()-1)));
+				y=new FNum(BigInteger.valueOf(100));
+			}else if(val.indexOf("e")!=-1){
+				x=new FNum(val.split("e")[0]);
+				y=TEN.pow(-Integer.parseInt(val.split("e")[1]));
 			}else if(val.indexOf(".")!=-1){
 				BigDecimal v=new BigDecimal(val);
-				x=v.unscaledValue();
-				y=BigInteger.TEN.pow(v.scale());
+				x=new FNum(v.unscaledValue());
+				y=TEN.pow(v.scale());
 			}else{
-				x=new BigInteger(i[0]);
-				y=BigInteger.ONE;
+				x=new FNum(new BigInteger(i[0]));
+				y=ONE;
 			}
 		}else{
-			x=new BigInteger(i[0]);
-			y=new BigInteger(i[1]);
+			x=new FNum(new BigInteger(i[0]));
+			y=new FNum(new BigInteger(i[1]));
 		}
-		FNum z=new FNum(x,y);
+		FNum z=x.divide(y);
 		n=z.n;
 		d=z.d;
 	}
