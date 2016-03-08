@@ -37,6 +37,11 @@ root.gui
 
 See `gui.md`
 
+```
+root.timer
+```
+
+See `timer.md`
 
 **Function root.set**
 
