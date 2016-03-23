@@ -3,7 +3,7 @@ package lang;
 public class FBool extends FObj {
 	private FBool(String t){
 		Namespace.byName("root").setConstant(t, this);;
-		set("toString",new Function((a,b)->new FString(t)));
+		set("toString",new Function(a->new FString(t)));
 		this.setImmutable();
 	}
 	public static final FBool TRUE=new FBool("TRUE");

@@ -114,7 +114,10 @@ public class FNum extends FObj implements Comparable<FNum>{
 		String[] i=val.split("/");
 		FNum x,y;
 		if(i.length==1){
-			if(val.indexOf("%")!=-1){
+			if(val.startsWith("0x")){
+				x=new FNum(new BigInteger(val.substring(2),16));
+				y=ONE;
+			}else if(val.indexOf("%")!=-1){
 				x=new FNum(new BigInteger(i[0].substring(0,i[0].length()-1)));
 				y=new FNum(BigInteger.valueOf(100));
 			}else if(val.indexOf("e")!=-1){

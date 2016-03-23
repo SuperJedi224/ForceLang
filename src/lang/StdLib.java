@@ -1,19 +1,19 @@
 package lang;
 
+import java.io.File;
 import java.math.BigInteger;
-import java.util.List;
-import java.util.Random;
+import java.text.*;
+import java.util.*;
 
-
+import javax.imageio.ImageIO;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
-
+import lang.exceptions.*;
 import lang.exceptions.IllegalArgumentException;
-import lang.exceptions.IllegalInvocationException;
-import lang.exceptions.NamespaceNotFoundException;
-import lang.exceptions.NoSuchLabelException;
-import lang.exceptions.NoSuchModuleException;
+import lang.graphics.FCanvas;
+
+import java.lang.Exception;
 
 public class StdLib {
 	private static Random rand=new Random();
@@ -25,6 +25,8 @@ public class StdLib {
 		Namespace string=Namespace.byName("root.string");
 		Namespace gui=Namespace.byName("root.gui");
 		Namespace timer=Namespace.byName("root.timer");
+		Namespace graphics=Namespace.byName("root.graphics");
+		Namespace datetime=Namespace.byName("root.datetime");
 		string.setMethod("builder",a->{
 			FStringBuilder s=new FStringBuilder();
 			if(a!=null)s.add(ForceLang.parse(a));
@@ -204,7 +206,31 @@ public class StdLib {
 			j.setAlwaysOnTop(true);
 			return new FString(JOptionPane.showInputDialog(j, a==null?"":ForceLang.stringify(ForceLang.parse(a))));
 		});
-		timer.setMethod("new",a->new FTimer());
-		math.setImmutable();random.setImmutable();io.setImmutable();string.setImmutable();gui.setImmutable();timer.setImmutable();
+		timer.setMethod("new",a->{
+			System.err.println("timer.new is deprecated, use datetime.timer instead");
+			return new FTimer();	
+		});
+		datetime.setMethod("timer",a->new FTimer());
+		datetime.setMethod("now",a->new FNum(System.currentTimeMillis()));
+		datetime.setMethod("toTimeString",a->{
+			DateFormat df = DateFormat.getTimeInstance();
+			return new FString(df.format(new Date(((FNum)ForceLang.parse(a)).longValue())));
+		});
+		datetime.setMethod("toDateString",a->{
+			DateFormat df = DateFormat.getDateInstance();
+			return new FString(df.format(new Date(((FNum)ForceLang.parse(a)).longValue())));
+		});
+		graphics.setMethod("canvas",a->{
+			FObj o=ForceLang.parse(a);
+			if(o instanceof FString){
+				try {
+					return new FCanvas(ImageIO.read(new File(a.toString())));
+				} catch (Exception e) {
+					throw new InvalidFileException("Not found, or not an image.");
+				}
+			}
+			return new FCanvas(o);
+		});
+		math.setImmutable();random.setImmutable();io.setImmutable();string.setImmutable();gui.setImmutable();timer.setImmutable();datetime.setImmutable();graphics.setImmutable();
 	}
 }
