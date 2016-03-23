@@ -38,10 +38,16 @@ root.gui
 See `gui.md`
 
 ```
-root.timer
+root.datetime
 ```
 
-See `timer.md`
+See `datetime.md`
+
+```
+root.graphics
+```
+
+See `graphics.md`
 
 **Function root.set**
 
