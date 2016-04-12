@@ -14,7 +14,7 @@ public class FObj {
 	}
 	public String toString(){
 		if(fields.containsKey("toString")){
-			return ((Function)fields.get("toString")).apply(null,this).toString();
+			return ((Function)fields.get("toString")).apply(null).toString();
 		}
 		return super.toString();
 	}
