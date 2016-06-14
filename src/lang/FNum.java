@@ -85,6 +85,13 @@ public class FNum extends FObj implements Comparable<FNum>{
 			}
 			throw new IllegalArgumentException("");
 		}));
+		set("pow",new Function(a->{
+			FObj o=ForceLang.parse(a);
+			if(o instanceof FNum){
+				return this.pow(((FNum)o).intValue());
+			}
+			throw new IllegalArgumentException("");
+		}));
 	}
 	public String toString(){
 		if(d.equals(d.ONE))return n.toString();
