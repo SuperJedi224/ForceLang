@@ -28,7 +28,7 @@ public final class ForceLang{
 		if(x.equals("{}"))return new FObj();
 		if(x.equals("[]"))return new FList();
 		if(x.equals("nil"))return null;
-		if(x.matches("\"[^\"]+\"")){
+		if(x.matches("\"[^\"]*\"")){
 			return new FString(x.replaceAll("^.|.$",""));
 		}
 		if(x.contains(" ")){
