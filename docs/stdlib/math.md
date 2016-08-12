@@ -38,6 +38,10 @@ math.log <number>
 
 Returns an approximation of the common logarithm of the specified number, derived by using properties of logarithms on the result of `math.ln`.
 
+**Function math.floor**
 
+```
+math.floor <number>
+```
 
-
+Returns the given number truncated to the nearest integer.
