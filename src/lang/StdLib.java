@@ -20,6 +20,7 @@ public class StdLib {
 	public static void load(){
 		Namespace root=Namespace.byName("root");
 		Namespace math=Namespace.byName("root.math");
+		Namespace number=Namespace.byName("root.number");
 		Namespace io=Namespace.byName("root.io");
 		Namespace random=Namespace.byName("root.random");
 		Namespace string=Namespace.byName("root.string");
@@ -32,6 +33,13 @@ public class StdLib {
 			if(a!=null)s.add(ForceLang.parse(a));
 			return s;
 			
+		});
+		string.setMethod("char",a->{
+			if(a==null)throw new IllegalInvocationException("math.sqrt is not nulladic.");
+			FObj o=ForceLang.parse(a);
+			try{return new FString(""+(char)((FNum)o).longValue());}catch(Exception e){
+				throw new IllegalArgumentException("Expected Number.");
+			}
 		});
 		random.setMethod("rand",a->{
 			if(a==null)a="80";
@@ -87,6 +95,13 @@ public class StdLib {
 		    if(a==null)throw new IllegalInvocationException("math.log is not nulladic.");
 			FObj o=ForceLang.parse(a);
 			try{return ((FNum)o).ln().multiply(new FNum("4885743/11249839"));}catch(Exception e){
+				throw new IllegalArgumentException("Expected Number.");
+			}
+		});
+		math.setMethod("floor",a->{
+			if(a==null)throw new IllegalInvocationException("math.floor is not nulladic.");
+			FObj o=ForceLang.parse(a);
+			try{return ((FNum)o).floor();}catch(Exception e){
 				throw new IllegalArgumentException("Expected Number.");
 			}
 		});
@@ -231,6 +246,8 @@ public class StdLib {
 			}
 			return new FCanvas(o);
 		});
-		math.setImmutable();random.setImmutable();io.setImmutable();string.setImmutable();gui.setImmutable();timer.setImmutable();datetime.setImmutable();graphics.setImmutable();
+		number.setMethod("parse",a->new FNum(ForceLang.stringify(ForceLang.parse(a))));
+		math.setImmutable();random.setImmutable();io.setImmutable();string.setImmutable();gui.setImmutable();timer.setImmutable();datetime.setImmutable();
+		graphics.setImmutable();number.setImmutable();
 	}
 }
