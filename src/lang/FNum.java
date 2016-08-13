@@ -8,6 +8,9 @@ import java.math.BigInteger;
  * @author Johnathan Waugh
  */
 public class FNum extends FObj implements Comparable<FNum>{
+	public FNum floor(){
+		return new FNum(n.divide(d));
+	}
 	public boolean equals(Object o){
 		if(o instanceof FNum){
 			FNum num=(FNum)o;
