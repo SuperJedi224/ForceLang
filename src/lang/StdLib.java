@@ -34,6 +34,20 @@ public class StdLib {
 			return s;
 			
 		});
+		string.setMethod("rev",a->{
+			if(a==null)throw new IllegalInvocationException("string.rev is not nulladic.");
+			FObj o=ForceLang.parse(a);
+			if(o instanceof FString){
+				return new FString(new StringBuilder(o.toString()).reverse().toString());
+			}else if(o instanceof FStringBuilder){
+				FStringBuilder s=new FStringBuilder();
+				s.add(new FString(new StringBuilder(o.toString()).reverse().toString()));
+				return s;
+			}else{
+				throw new IllegalInvocationException("string.rev cannot be called with this argument.");
+			}
+			
+		});
 		string.setMethod("char",a->{
 			if(a==null)throw new IllegalInvocationException("math.sqrt is not nulladic.");
 			FObj o=ForceLang.parse(a);
