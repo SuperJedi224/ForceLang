@@ -44,7 +44,7 @@ public class StdLib {
 				s.add(new FString(new StringBuilder(o.toString()).reverse().toString()));
 				return s;
 			}else{
-				throw new IllegalInvocationException("string.rev cannot be called with this argument.");
+				throw new IllegalArgumentException("string.rev cannot be called with this argument.");
 			}
 			
 		});
@@ -81,7 +81,7 @@ public class StdLib {
 					long l=((FNum)o).longValue();
 					rand=new Random(l);
 				}else{
-					throw new IllegalInvocationException(o+" is not an integer, or is out of range.");
+					throw new IllegalArgumentException(o+" is not an integer, or is out of range.");
 				}
 			}else{
 				throw new IllegalArgumentException("Expected Number.");
