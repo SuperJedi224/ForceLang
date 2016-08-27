@@ -8,6 +8,6 @@ You can get and set list elements using the subscript operator, `<list>[<index>]
 
 **List objects have the following methods:**
 
-`length()`
+`len()`
 
-Returns the length of the string being built.
+Returns the number of elements in the list.
