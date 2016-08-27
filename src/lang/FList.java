@@ -8,6 +8,9 @@ public class FList extends FObj{
 		set("toString",new Function(a->{
 			return new FString(list.toString());
 		}));
+		set("len",new Function(a->{
+			return new FNum(list.size());
+		}));
 	}
 	public void append(FObj f){
 		list.add(f);
