@@ -18,3 +18,6 @@ They have the following methods:
 
 `turnPen <amount>`: Rotates the pen's direction the specified integer number of degrees clockwise (use negative values to turn counterclockwise)
 
+`getWidth()`: Return the width of the image
+
+`getHeight()`: Return the height of the image
