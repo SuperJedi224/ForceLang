@@ -17,6 +17,7 @@ import lang.FNum;
 import lang.FObj;
 import lang.ForceLang;
 import lang.Function;
+import lang.exceptions.IllegalInvocationException;
 
 import java.io.File;
 
@@ -88,6 +89,14 @@ public class FCanvas extends FObj{
 			x=x1;
 			y=y1;
 			return null;
+		}));
+		this.set("getWidth",new Function(a->{
+			if(a!=null)throw new IllegalInvocationException("getWidth is a nulladic function.");
+			return new FNum(img.getWidth());
+		}));
+		this.set("getHeight",new Function(a->{
+			if(a!=null)throw new IllegalInvocationException("getWidth is a nulladic function.");
+			return new FNum(img.getHeight());
 		}));
 		this.set("turnPen",new Function(a->{
 			direction+=((FNum)ForceLang.parse(a)).intValue();
