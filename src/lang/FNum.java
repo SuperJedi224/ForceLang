@@ -22,7 +22,7 @@ public class FNum extends FObj implements Comparable<FNum>{
 		return !equals(ZERO);
 	}
 	public FObj add(FObj o){
-		/*if(o==null)return this;*/
+		if(o==null)return this;
 		if(o instanceof FNum){
 			return add((FNum)o);
 		}
@@ -97,7 +97,7 @@ public class FNum extends FObj implements Comparable<FNum>{
 		}));
 	}
 	public String toString(){
-		if(d.equals(d.ONE))return n.toString();
+		if(d.equals(BigInteger.ONE))return n.toString();
 		return this.n+"/"+this.d;
 	}
 	/**
