@@ -165,6 +165,13 @@ public class StdLib {
 			return x;
 			
 		});
+		root.setMethod("exit",a->{
+			if(a!=null){
+				System.err.println(ForceLang.stringify(ForceLang.parse(a)));
+			}
+			System.exit(0);
+			return null;
+		});
 		root.setMethod("cons",a->{
 			int i=a.indexOf(" ");
 			String s="root."+a.substring(0,i),t=s.substring(0,s.lastIndexOf(".")),u=s.substring(1+s.lastIndexOf("."));
