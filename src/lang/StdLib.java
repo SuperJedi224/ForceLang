@@ -49,10 +49,23 @@ public class StdLib {
 			
 		});
 		string.setMethod("char",a->{
-			if(a==null)throw new IllegalInvocationException("math.sqrt is not nulladic.");
+			if(a==null)throw new IllegalInvocationException("string.char is not nulladic.");
 			FObj o=ForceLang.parse(a);
 			try{return new FString(""+(char)((FNum)o).longValue());}catch(Exception e){
 				throw new IllegalArgumentException("Expected Number.");
+			}
+		});
+		string.setMethod("toCharArray",a->{
+			if(a==null)throw new IllegalInvocationException("string.toCharArray is not nulladic.");
+			FObj o=ForceLang.parse(a);
+			try{String s=((FString)o).toString();
+			FList l=new FList();
+			for(char c:s.toCharArray()){
+				l.append(new FNum((int)c));
+			}
+			return l;
+			}catch(Exception e){
+				throw new IllegalArgumentException("Expected String.");
 			}
 		});
 		random.setMethod("rand",a->{

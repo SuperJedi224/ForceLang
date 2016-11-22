@@ -6,6 +6,7 @@ public class FString extends FObj {
 	final String val;
 	public FString(String s){
 		val=s;
+		this.set("len",new FNum(s.length()));
 		this.setImmutable();
 	}
 	public FString(Scanner s){
