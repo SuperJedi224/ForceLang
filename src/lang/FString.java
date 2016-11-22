@@ -8,7 +8,7 @@ public class FString extends FObj {
 	final String val;
 	public FString(String s){
 		val=s;
-		this.set("length",new FNum(s.length()));
+		this.set("len",new FNum(s.length()));
 		this.set("charAt",new Function(a->{
 			FObj o=ForceLang.parse(a);
 			try{return new FString(""+val.charAt(((FNum)o).intValue()));}catch(Exception e){
