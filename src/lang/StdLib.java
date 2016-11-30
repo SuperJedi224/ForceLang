@@ -269,6 +269,12 @@ public class StdLib {
 			DateFormat df = DateFormat.getDateInstance();
 			return new FString(df.format(new Date(((FNum)ForceLang.parse(a)).longValue())));
 		});
+		datetime.setMethod("wait",a->{
+			long f=((FNum)ForceLang.parse(a)).longValue();
+			long t=System.nanoTime();
+			while(System.nanoTime()-t<f*1000000);
+			return null;
+		});
 		graphics.setMethod("canvas",a->{
 			FObj o=ForceLang.parse(a);
 			if(o instanceof FString){
