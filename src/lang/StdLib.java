@@ -272,8 +272,8 @@ public class StdLib {
 		datetime.setMethod("wait",a->{
 			long f=((FNum)ForceLang.parse(a)).longValue();
 			long t=System.nanoTime();
-			while(System.nanoTime()-t<f*1000000);
-			return null;
+			try{Thread.sleep(f);}catch(Exception e);
+			return new FNum((System.nanoTime()-t)/100000)
 		});
 		graphics.setMethod("canvas",a->{
 			FObj o=ForceLang.parse(a);
