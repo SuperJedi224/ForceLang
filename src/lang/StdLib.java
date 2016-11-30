@@ -273,7 +273,7 @@ public class StdLib {
 			long f=((FNum)ForceLang.parse(a)).longValue();
 			long t=System.nanoTime();
 			try{Thread.sleep(f);}catch(Exception e){};
-			return new FNum((System.nanoTime()-t)/100000);
+			return new FNum((System.nanoTime()-t)/1000000);
 		});
 		graphics.setMethod("canvas",a->{
 			FObj o=ForceLang.parse(a);
