@@ -45,3 +45,19 @@ math.floor <number>
 ```
 
 Returns the given number truncated to the nearest integer.
+
+**Function math.sin**
+
+```
+math.sin <number>
+```
+
+Returns a rational approximation of the sine of the specified number, based on the taylor series for the sine function.
+
+**Function math.cos**
+
+```
+math.cos <number>
+```
+
+Returns a rational approximation of the cosine of the specified number, based on the taylor series for the cosine function.
