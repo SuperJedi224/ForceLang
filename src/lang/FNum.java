@@ -61,6 +61,26 @@ public class FNum extends FObj implements Comparable<FNum>{
 	public static final FNum ONE_TENTH=new FNum(1,10);
 	public static final FNum INFINITY=new FNum(1,0);
 	public static final FNum MINUS_INFINITY=new FNum(-1,0);
+	
+	public static final FNum PI=new FNum(245850922,78256779);
+	public FNum cos(){
+		FNum f=this;
+		FNum s=ZERO;
+		FNum fac=ONE;
+		final FNum TWOPI=FNum.PI.multiply(new FNum(2));
+		while(f.compareTo(FNum.ZERO)<0){
+			f=f.add(TWOPI);
+		}
+		while(f.compareTo(TWOPI)>0){
+			f=f.subtract(TWOPI);
+		}
+		for(int i=0;i<24;i++){
+			FNum n=new FNum(-1).pow(i).multiply(f.pow(2*i));
+			if(i!=0)fac=fac.multiply(new FNum(2*i-1)).multiply(new FNum(2*i));
+			s=s.add(n.divide(fac));
+		}
+		return s;
+	}
 	/**
 	 * The BigRational n/d.
 	 * @param n The numerator as a BigInteger.
@@ -201,8 +221,10 @@ public class FNum extends FObj implements Comparable<FNum>{
 	 */
 	public int compareTo(FNum o){
 		if(isNaN())return o.isNaN()?0:-1;
-		if(toString().equals("Infinity"))return o.toString().equals("Infinity")?0:1;
-		if(toString().equals("-Infinity"))return o.toString().equals("-Infinity")?0:-1;
+		if(d.equals(BigInteger.ZERO)){
+			if(toString().equals("Infinity"))return o.toString().equals("Infinity")?0:1;
+			if(toString().equals("-Infinity"))return o.toString().equals("-Infinity")?0:-1;
+		}
 		return n.multiply(o.d).compareTo(o.n.multiply(d));
 	}
 	/**
@@ -319,6 +341,7 @@ public class FNum extends FObj implements Comparable<FNum>{
 	 * @return A string representation as described above
 	 */
 	public String toString(int decimalPlaces){
+		if(compareTo(ZERO)<0)return "-"+multiply(new FNum(-1)).toString(decimalPlaces);
 		BigInteger v=n;
 		BigInteger[] k=n.divideAndRemainder(d);
 		String c=k[0].longValue()+".";

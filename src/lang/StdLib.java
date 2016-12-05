@@ -101,7 +101,7 @@ public class StdLib {
 			}
 			return null;
 		});
-		math.setConstant("pi",new FNum("245850922/78256779"));
+		math.setConstant("pi",FNum.PI);
 		math.setConstant("e",new FNum("268876667/98914198"));
 		math.setConstant("phi",new FNum("63245986/39088169"));
 		math.setMethod("sqrt",a->{
@@ -122,6 +122,32 @@ public class StdLib {
 		    if(a==null)throw new IllegalInvocationException("math.log is not nulladic.");
 			FObj o=ForceLang.parse(a);
 			try{return ((FNum)o).ln().multiply(new FNum("4885743/11249839"));}catch(Exception e){
+				throw new IllegalArgumentException("Expected Number.");
+			}
+		});
+		math.setMethod("cos",a->{
+			if(a==null)throw new IllegalInvocationException("math.sin is not nulladic.");
+			try{
+				FNum f=(FNum)ForceLang.parse(a);
+				return f.cos();
+			}catch(Exception e){
+				throw new IllegalArgumentException("Expected Number.");
+			}
+		});
+		math.setMethod("sin",a->{
+			if(a==null)throw new IllegalInvocationException("math.sin is not nulladic.");
+			try{
+				FNum f=(FNum)ForceLang.parse(a);
+				FNum g=f.ONE.subtract(f.cos().pow(2)).sqrt();
+				final FNum TWOPI=FNum.PI.multiply(new FNum(2));
+				while(f.compareTo(FNum.ZERO)<0){
+					f=f.add(TWOPI);
+				}
+				while(f.compareTo(TWOPI)>0){
+					f=f.subtract(TWOPI);
+				}
+				return f.compareTo(f.PI)>0?g.multiply(new FNum(-1)):g;
+			}catch(Exception e){
 				throw new IllegalArgumentException("Expected Number.");
 			}
 		});
@@ -226,8 +252,9 @@ public class StdLib {
 			}
 		});
 		root.setMethod("if",a->{
+			int l=ForceLang.getIndentationLevel(ForceLang.iPointer+1);
+			if(ForceLang.getIndentationLevel(ForceLang.iPointer)>l)throw new IndentationException("Bad indentation on line "+(ForceLang.iPointer+2));
 			if(!FBool.valueOf(ForceLang.parse(a)).isTruthy()){
-				int l=ForceLang.getIndentationLevel(ForceLang.iPointer+1);
 				if(ForceLang.getIndentationLevel(ForceLang.iPointer)==l){ForceLang.iPointer++;return null;}
 				do{ForceLang.iPointer++;}while(ForceLang.getIndentationLevel(ForceLang.iPointer+1)>=l);
 			}
