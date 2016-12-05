@@ -97,7 +97,7 @@ As goto, but evaluates the argument first and uses the result as the label name.
 if <value>
 ```
 
-Requires the next line to have an indentation level at least as great as that of the current line.
+Requires the next line to have an indentation level at least as great as that of the current line, throwing an `IndentationException` otherwise.
 
 If `<value>` is falsy:
  - If the next line has the same indentation level as the current line, skip to the line after
@@ -109,7 +109,7 @@ If `<value>` is falsy:
 require <module>
 ```
 
-Attempts to locate the specified module initializer (In the reference implementation, module initializers are java classes with the method `public static void load(Module m)`), if it exists; then uses it to initialize a `Module` object which is then returned. If such an initializer is not found, or initialization fails, a `NoSuchModule` exception is thrown.
+Attempts to locate the specified module initializer (In the reference implementation, module initializers are java classes with the method `public static void load(Module m)`), if it exists; then uses it to initialize a `Module` object which is then returned. If such an initializer is not found, or initialization fails, a `NoSuchModuleException` is thrown.
 
 **Function root.def**
 
