@@ -151,6 +151,24 @@ public class StdLib {
 				throw new IllegalArgumentException("Expected Number.");
 			}
 		});
+		math.setMethod("tan",a->{
+			try{
+				FNum f=(FNum)ForceLang.parse(a);
+				FNum c=f.cos();
+				FNum g=f.ONE.subtract(c.pow(2)).sqrt();
+				final FNum TWOPI=FNum.PI.multiply(new FNum(2));
+				while(f.compareTo(FNum.ZERO)<0){
+					f=f.add(TWOPI);
+				}
+				while(f.compareTo(TWOPI)>0){
+					f=f.subtract(TWOPI);
+				}
+				f=f.compareTo(f.PI)>0?g.multiply(new FNum(-1)):g;
+				return f.divide(c);
+			}catch(Exception e){
+				throw new IllegalArgumentException("Expected Number.");
+			}
+		});
 		math.setMethod("floor",a->{
 			if(a==null)throw new IllegalInvocationException("math.floor is not nulladic.");
 			FObj o=ForceLang.parse(a);
