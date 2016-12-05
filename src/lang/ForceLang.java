@@ -14,6 +14,12 @@ import java.lang.Exception;
 public final class ForceLang{
 	public static final Map<String,String>defs=new HashMap<>();
 	public static final Scanner input=new Scanner(System.in);
+	public static int getIndentationLevel(int line){
+		String s=prog.get(line);
+		int i=0;
+		while(s.charAt(i)==' ')i++;
+		return i;
+	}
 	public static String stringify(Object o){
 		if(o==null)return "<nil>";
 		return o.toString();
@@ -75,7 +81,7 @@ public final class ForceLang{
 		if(x.endsWith("()")){			
 			x=x.substring(0,x.length()-2);
 			FObj o2=parse(x);
-			if(o2==null){throw new IllegalInvocationException("null is not a function.");}
+			if(o2==null){throw new IllegalInvocationException("null is not a function."+x);}
 			else if(o2 instanceof Function){
 				return ((Function)o2).apply(null);
 			}else if(o2 instanceof Module){
@@ -111,11 +117,11 @@ public final class ForceLang{
 		}
 		
 		Scanner freader=new Scanner(new File(fname));
-		while(freader.hasNext())prog.add(freader.nextLine().replaceAll("^\\s+",""));
+		while(freader.hasNext())prog.add(freader.nextLine());
 		freader.close();
 		iPointer=0;
 		while(iPointer<prog.size()){
-			parse(prog.get(iPointer));
+			parse(prog.get(iPointer).replaceAll("^\\s+",""));
 			iPointer++;
 		}
 	}

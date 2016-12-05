@@ -226,7 +226,11 @@ public class StdLib {
 			}
 		});
 		root.setMethod("if",a->{
-			if(!FBool.valueOf(ForceLang.parse(a)).isTruthy())ForceLang.iPointer++;
+			if(!FBool.valueOf(ForceLang.parse(a)).isTruthy()){
+				int l=ForceLang.getIndentationLevel(ForceLang.iPointer+1);
+				if(ForceLang.getIndentationLevel(ForceLang.iPointer)==l){ForceLang.iPointer++;return null;}
+				do{ForceLang.iPointer++;}while(ForceLang.getIndentationLevel(ForceLang.iPointer+1)>=l);
+			}
 			return null;
 		});
 		root.setMethod("def",a->{
@@ -268,12 +272,6 @@ public class StdLib {
 		datetime.setMethod("toDateString",a->{
 			DateFormat df = DateFormat.getDateInstance();
 			return new FString(df.format(new Date(((FNum)ForceLang.parse(a)).longValue())));
-		});
-		datetime.setMethod("wait",a->{
-			long f=((FNum)ForceLang.parse(a)).longValue();
-			long t=System.nanoTime();
-			try{Thread.sleep(f);}catch(Exception e){};
-			return new FNum((System.nanoTime()-t)/1000000);
 		});
 		graphics.setMethod("canvas",a->{
 			FObj o=ForceLang.parse(a);
