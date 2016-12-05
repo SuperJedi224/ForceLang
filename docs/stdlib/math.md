@@ -61,3 +61,11 @@ math.cos <number>
 ```
 
 Returns a rational approximation of the cosine of the specified number, based on the taylor series for the cosine function.
+
+**Function math.tan**
+
+```
+math.tan <number>
+```
+
+Returns a rational approximation of the tangent of the specified number, calculated by dividing the value returned by `math.sin` by the value returned by `math.cos`
