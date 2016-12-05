@@ -97,7 +97,11 @@ As goto, but evaluates the argument first and uses the result as the label name.
 if <value>
 ```
 
-If `value` evaluates to falsy, skips the next line of the program
+Requires the next line to have an indentation level at least as great as that of the current line.
+
+If `<value>` is falsy:
+ - If the next line has the same indentation level as the current line, skip to the line after
+ - If the next line has an indentation level exceeding that of the current line, skip to the first line after that to have a lower indentation level than the next line
 
 **Function root.require**
 
