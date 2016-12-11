@@ -99,7 +99,7 @@ public class FNum extends FObj implements Comparable<FNum>{
 	{
 		set("toString",new Function(a->{
 			if(a==null)return new FString(toString());
-			return new FString(toString(Integer.parseInt(a)));
+			return new FString(toString(((FNum)ForceLang.parse(a)).intValue()));
 		}));
 		set("mult",new Function(a->{
 			FObj o=ForceLang.parse(a);
