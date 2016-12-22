@@ -1,5 +1,5 @@
 #Type Timer
-Timer objects are used for calculating elapsed time. The function `timer.new()` returns a new `Timer` instance.
+Timer objects are used for calculating elapsed time. The functions `datetime.timer()` and <s>`timer.new()`</s> (deprecated) can be used to create `Timer` instances.
 
 Timer objects have the following methods:
 
