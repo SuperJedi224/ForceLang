@@ -115,9 +115,7 @@ public class StdLib {
 		math.setMethod("ln",a->{
 			if(a==null)throw new IllegalInvocationException("math.ln is not nulladic.");
 			FObj o=ForceLang.parse(a);
-			try{return ((FNum)o).ln();}catch(Exception e){
-				throw new IllegalArgumentException("Expected Number.");
-			}
+			try{return ((FNum)o).ln();}catch(Exception e){throw new IllegalArgumentException("Expected Number.");}
 		});
 		math.setMethod("log",a->{
 		    if(a==null)throw new IllegalInvocationException("math.log is not nulladic.");

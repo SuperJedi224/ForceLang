@@ -205,7 +205,7 @@ public class FNum extends FObj implements Comparable<FNum>{
 				i++;
 			}
 			return new FNum(i).add(m.ln()).multiply(t);
-		}
+		} 
 		m=m.subtract(ONE).divide(m);
 		for(int i=1;i<100;i++){
 			n=n.add(ONE.divide(new FNum(i)).multiply(m.pow(i)));
