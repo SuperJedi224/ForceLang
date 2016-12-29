@@ -102,12 +102,13 @@ public class StdLib {
 			return null;
 		});
 		math.setConstant("pi",FNum.PI);
-		math.setConstant("e",new FNum("268876667/98914198"));
+		math.setConstant("e",FNum.E);
 		math.setConstant("phi",new FNum("63245986/39088169"));
 		math.setMethod("sqrt",a->{
 			if(a==null)throw new IllegalInvocationException("math.sqrt is not nulladic.");
 			FObj o=ForceLang.parse(a);
 			try{return ((FNum)o).sqrt();}catch(Exception e){
+				e.printStackTrace();
 				throw new IllegalArgumentException("Expected Number.");
 			}
 		});
@@ -138,7 +139,7 @@ public class StdLib {
 			if(a==null)throw new IllegalInvocationException("math.sin is not nulladic.");
 			try{
 				FNum f=(FNum)ForceLang.parse(a);
-				FNum g=f.ONE.subtract(f.cos().pow(2)).sqrt();
+				FNum g=FNum.ONE.subtract(f.cos().pow(2)).sqrt();
 				final FNum TWOPI=FNum.PI.multiply(new FNum(2));
 				while(f.compareTo(FNum.ZERO)<0){
 					f=f.add(TWOPI);
@@ -146,7 +147,7 @@ public class StdLib {
 				while(f.compareTo(TWOPI)>0){
 					f=f.subtract(TWOPI);
 				}
-				return f.compareTo(f.PI)>0?g.multiply(new FNum(-1)):g;
+				return f.compareTo(FNum.PI)>0?g.multiply(new FNum(-1)):g;
 			}catch(Exception e){
 				throw new IllegalArgumentException("Expected Number.");
 			}
@@ -155,7 +156,7 @@ public class StdLib {
 			try{
 				FNum f=(FNum)ForceLang.parse(a);
 				FNum c=f.cos();
-				FNum g=f.ONE.subtract(c.pow(2)).sqrt();
+				FNum g=FNum.ONE.subtract(c.pow(2)).sqrt();
 				final FNum TWOPI=FNum.PI.multiply(new FNum(2));
 				while(f.compareTo(FNum.ZERO)<0){
 					f=f.add(TWOPI);
@@ -163,7 +164,7 @@ public class StdLib {
 				while(f.compareTo(TWOPI)>0){
 					f=f.subtract(TWOPI);
 				}
-				f=f.compareTo(f.PI)>0?g.multiply(new FNum(-1)):g;
+				f=f.compareTo(FNum.PI)>0?g.multiply(new FNum(-1)):g;
 				return f.divide(c);
 			}catch(Exception e){
 				throw new IllegalArgumentException("Expected Number.");
@@ -179,10 +180,12 @@ public class StdLib {
 		io.setMethod("write",a->{
 			if(a==null)throw new IllegalInvocationException("io.write is not nulladic.");
 			System.out.print(ForceLang.stringify(ForceLang.parse(a)));
+			System.out.flush();
 			return null;
 		});
 		io.setMethod("writeln",a->{
 			System.out.println(a==null?"":ForceLang.stringify(ForceLang.parse(a)));
+			System.out.flush();
 			return null;
 		});
 		io.setMethod("readln",a->{

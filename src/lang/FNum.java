@@ -63,6 +63,7 @@ public class FNum extends FObj implements Comparable<FNum>{
 	public static final FNum MINUS_INFINITY=new FNum(-1,0);
 	
 	public static final FNum PI=new FNum(245850922,78256779);
+	public static final FNum E=new FNum(268876667,98914198);
 	public FNum cos(){
 		FNum f=this;
 		FNum s=ZERO;
@@ -197,8 +198,16 @@ public class FNum extends FObj implements Comparable<FNum>{
 			m=ONE.divide(m);
 			t=new FNum(-1);
 		}
+		if(m.compareTo(E)>0){
+			int i=0;
+			while(m.compareTo(E)>0){
+				m=m.divide(E);
+				i++;
+			}
+			return new FNum(i).add(m.ln()).multiply(t);
+		}
 		m=m.subtract(ONE).divide(m);
-		for(int i=1;i<200;i++){
+		for(int i=1;i<100;i++){
 			n=n.add(ONE.divide(new FNum(i)).multiply(m.pow(i)));
 		}
 		return n.multiply(t);
@@ -360,7 +369,7 @@ public class FNum extends FObj implements Comparable<FNum>{
 	}
 	public FNum sqrt(){
 		FNum a=new FNum(sqrt(n.divide(d)).add(BigInteger.ONE));
-		for(int i=0;i<5;i++){
+		for(int i=0;i<9;i++){
 			a=a.add(this.divide(a)).multiply(ONE_HALF);
 		}
 		return a;
