@@ -78,6 +78,11 @@ public final class ForceLang{
 			return ForceLang.parse(x.substring(0,i)).add(ForceLang.parse(x.substring(i+1)));
 		}
 		try{return new FNum(x);}catch(Exception e){};
+		if(x.startsWith("-")){
+			FObj f2=ForceLang.parse(x.substring(1)),f3=f2.get("mult");
+			if(f3==null||!(f3 instanceof Function))throw new IllegalInvocationException("Illegal argument for hyphen-minus.");
+			return ((Function)f3).apply("-1");
+		}
 		if(x.endsWith("()")){			
 			x=x.substring(0,x.length()-2);
 			FObj o2=parse(x);
