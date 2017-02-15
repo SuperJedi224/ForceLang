@@ -28,7 +28,7 @@ Returns an approximation of the square root of the specified number, using four 
 math.ln <number>
 ```
 
-Returns an approximation of the natural logarithm of the specified number, using the first 100 terms of the last approximation described [here.](https://en.wikipedia.org/wiki/Natural_logarithm)
+Returns an approximation of the natural logarithm of the specified number. The referecnce implementation is based on the last approximation described [here.](https://en.wikipedia.org/wiki/Natural_logarithm)
 
 **Function math.log**
 
