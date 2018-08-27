@@ -117,12 +117,16 @@ public class FNum extends FObj implements Comparable<FNum>{
 			throw new IllegalArgumentException("");
 		}));
 		set("toHexString",new Function(a->{
-			if(isNaN())return new FString("NaN");
+			if(isNaN()||denominator().equals(BigInteger.ZERO))return new FString(toString());
 			return new FString(this.numerator().divide(denominator()).toString(16));
 		}));
 	}
 	public String toString(){
 		if(d.equals(BigInteger.ONE))return n.toString();
+		if(isNaN())return "NaN";
+		if(denominator().equals(BigInteger.ZERO)){
+			return numerator().compareTo(BigInteger.ZERO)>0?"Infinity":"-Infinity";
+		}
 		return this.n+"/"+this.d;
 	}
 	/**
@@ -194,9 +198,9 @@ public class FNum extends FObj implements Comparable<FNum>{
 	}
 	
 	public FNum ln(){
-		if(isNaN())return this;
+		if(isNaN())return NaN;
 		if(signum()<0)return NaN;
-		if(n.equals(ZERO))return MINUS_INFINITY;
+		if(n.equals(BigInteger.ZERO))return MINUS_INFINITY;
 		FNum m=this,n=ZERO,t=ONE;
 		if(ONE.compareTo(m)>0){
 			m=ONE.divide(m);
@@ -307,7 +311,7 @@ public class FNum extends FObj implements Comparable<FNum>{
 	 * Returns true if this BigRational represents the ratio 0/0
 	 */
 	public boolean isNaN(){
-		return n.toString().equals("0")&&d.toString().equals("0");
+		return n.equals(BigInteger.ZERO)&&d.equals(BigInteger.ZERO);
 	}
 	/**
 	 * @throws ArithmeticException if this BigRational represents the ratio 0/0

@@ -14,6 +14,7 @@ import lang.exceptions.IllegalArgumentException;
 import lang.graphics.FCanvas;
 
 import java.lang.Exception;
+import java.lang.reflect.Method;
 
 public class StdLib {
 	private static Random rand=new Random();
@@ -28,6 +29,8 @@ public class StdLib {
 		Namespace timer=Namespace.byName("root.timer");
 		Namespace graphics=Namespace.byName("root.graphics");
 		Namespace datetime=Namespace.byName("root.datetime");
+		Namespace util=Namespace.byName("root.util");
+		Namespace reflect=Namespace.byName("root.reflect");
 		string.setMethod("builder",a->{
 			FStringBuilder s=new FStringBuilder();
 			if(a!=null)s.add(ForceLang.parse(a));
@@ -337,6 +340,39 @@ public class StdLib {
 			return new FCanvas(o);
 		});
 		number.setMethod("parse",a->new FNum(ForceLang.stringify(ForceLang.parse(a))));
+		reflect.setMethod("setProxy",a->{
+				int i=a.lastIndexOf(" ");
+				String a1=a.substring(0,i);
+				String a2=a.substring(i+1);
+				Proxy p;
+				try{
+					Function f=(Function)ForceLang.parse(a2);
+					if(f==null){
+						throw new IllegalArgumentException("");
+					}
+					p=new Proxy(a1,f);
+					
+				}catch(Exception e){
+						try{Module object=new Module();
+						Class<?>clazz=null;
+						try{clazz=Class.forName(a2);}catch(Exception f){clazz=Class.forName(a2+".Main");}
+						final Method m=clazz.getMethod("proxy",String.class);
+						p=new Proxy(a1, new Function(f->{
+							try{
+								//System.out.println(m);
+								return (FObj)m.invoke(null,f);
+							}catch(Exception ex){
+								throw new NoSuchModuleException(a+" "+ex);
+							}
+						}));
+						}catch(Exception f){
+							throw new NoSuchModuleException(a+" "+f);
+						}
+				};
+				if(p!=null){Proxy.proxies.add(p);}
+				return p;
+			}
+		);
 		math.setImmutable();random.setImmutable();io.setImmutable();string.setImmutable();gui.setImmutable();timer.setImmutable();datetime.setImmutable();
 		graphics.setImmutable();number.setImmutable();
 	}
