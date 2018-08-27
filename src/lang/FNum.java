@@ -118,7 +118,7 @@ public class FNum extends FObj implements Comparable<FNum>{
 		}));
 		set("toHexString",new Function(a->{
 			if(isNaN()||denominator().equals(BigInteger.ZERO))return new FString(toString());
-			return new FString(this.numerator().divide(denominator()).toString(16));
+			return new FString(this.numerator().divide(denominator()).toString(16).toUpperCase());
 		}));
 	}
 	public String toString(){
