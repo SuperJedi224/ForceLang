@@ -15,6 +15,7 @@ public class FileReader extends FObj{
 			throw new InvalidFileException(fname);
 		}
 		set("readln",new Function(a->new FString(source.nextLine())));
+		set("hasNext",new Function(a->FBool.valueOf(source.hasNextLine())));
 		set("readnum",new Function(a->new FNum(source.nextLine())));
 		immutableFields.add("readln");
 		immutableFields.add("readnum");
