@@ -127,6 +127,20 @@ undef <expression>
 
 If the specified expression has been redefined using the `def` instruction, undo the redefinition so that the expression is once again evaluated normally.
 
+**Function root.exit**
+
+```
+exit()
+```
+
+Exits the program.
+
+```
+exit <expression>
+```
+
+Outputs the value of the indicated expression to the STDERR, then exits the program as above.
+
 **Constant root.nil**
 
 The null object.
