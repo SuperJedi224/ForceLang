@@ -26,6 +26,13 @@ public final class ForceLang{
 	}
 	public static Namespace root=new Namespace("root",null){{set("root",this);immutableFields.add("root");}};
 	public static FObj parse(String x){
+		for(Proxy p:Proxy.proxies){
+			if(p.matches(x)){
+				try{return p.f.apply(x);}catch(Exception e){
+					System.err.println("Proxy exception");
+				}
+			}
+		}
 		while(defs.containsKey(x))x=defs.get(x);
 		if(x.startsWith("!")){
 			FObj o=parse(x.substring(1));
@@ -125,9 +132,13 @@ public final class ForceLang{
 		while(freader.hasNext())prog.add(freader.nextLine());
 		freader.close();
 		iPointer=0;
-		while(iPointer<prog.size()){
+		try{while(iPointer<prog.size()){
 			parse(prog.get(iPointer).replaceAll("^\\s+",""));
 			iPointer++;
+		}}catch(Exception e){
+			if(e instanceof lang.exceptions.Exception){
+				System.err.println("Error: "+e);
+			}else throw e;
 		}
 	}
 }
