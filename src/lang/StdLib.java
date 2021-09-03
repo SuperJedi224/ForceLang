@@ -19,6 +19,7 @@ import java.lang.reflect.Method;
 public class StdLib {
 	private static Random rand=new Random();
 	public static void load(){
+		//Create STDLIB namespaces
 		Namespace root=Namespace.byName("root");
 		Namespace math=Namespace.byName("root.math");
 		Namespace number=Namespace.byName("root.number");
@@ -31,6 +32,9 @@ public class StdLib {
 		Namespace datetime=Namespace.byName("root.datetime");
 		Namespace util=Namespace.byName("root.util");
 		Namespace reflect=Namespace.byName("root.reflect");
+		
+		
+		//Initialize constants & methods in STDLIB namespaces
 		string.setMethod("builder",a->{
 			FStringBuilder s=new FStringBuilder();
 			if(a!=null)s.add(ForceLang.parse(a));
@@ -71,6 +75,7 @@ public class StdLib {
 				throw new IllegalArgumentException("Expected String.");
 			}
 		});
+		
 		random.setMethod("rand",a->{
 			if(a==null)a="80";
 			try{
@@ -89,11 +94,28 @@ public class StdLib {
 				throw new IllegalArgumentException("Expected Number.");
 			}
 		});
+		random.setMethod("randInt",a->{
+			if(a==null)throw new IllegalInvocationException("random.randInt is not nulladic.");
+			try{
+				FNum b=(FNum)ForceLang.parse(a);
+				if(b.denominator().equals(BigInteger.ONE)){
+					long l=b.numerator().longValue();
+					if(l<=0)throw new IllegalArgumentException(l+" is nonpositive.");
+					if(l<=Integer.MAX_VALUE)return new FNum(rand.nextInt((int)l));
+					throw new IllegalArgumentException(l+" is too large.");
+				}else{
+					throw new IllegalArgumentException(b+" is not an integer.");
+				}
+			}catch(Exception e){
+				if(e instanceof IllegalArgumentException)throw e;
+				throw new IllegalArgumentException("Expected Number.");
+			}
+		});
 		random.setMethod("seed",a->{
 			if(a==null)throw new IllegalInvocationException("random.seed is not nulladic.");
 			FObj o=ForceLang.parse(a);
 			if(o instanceof FNum){
-				if(o.equals(new FNum(((FNum)o).longValue()))){
+				if(((FNum)o).denominator().equals(BigInteger.ONE)){
 					long l=((FNum)o).longValue();
 					rand=new Random(l);
 				}else{
@@ -104,6 +126,7 @@ public class StdLib {
 			}
 			return null;
 		});
+		
 		math.setConstant("pi",FNum.PI);
 		math.setConstant("e",FNum.E);
 		math.setConstant("phi",new FNum("63245986/39088169"));
@@ -178,6 +201,7 @@ public class StdLib {
 				throw new IllegalArgumentException("Expected Number.");
 			}
 		});
+		
 		io.setMethod("write",a->{
 			if(a==null)throw new IllegalInvocationException("io.write is not nulladic.");
 			System.out.print(ForceLang.stringify(ForceLang.parse(a)));
@@ -203,6 +227,7 @@ public class StdLib {
 				throw new IllegalArgumentException("Expected String");
 			}
 		});
+		
 		root.setConstant("nil",null);
 		root.setMethod("set",a->{
 			int i=a.indexOf(" ");
@@ -291,6 +316,7 @@ public class StdLib {
 			ForceLang.defs.remove(a);
 			return null;
 		});
+		
 		gui.setMethod("show",a->{
 			JFrame j=new JFrame();
 			j.setAlwaysOnTop(true);
@@ -308,10 +334,12 @@ public class StdLib {
 			j.setAlwaysOnTop(true);
 			return new FString(JOptionPane.showInputDialog(j, a==null?"":ForceLang.stringify(ForceLang.parse(a))));
 		});
+		
 		timer.setMethod("new",a->{
 			System.err.println("timer.new is deprecated, use datetime.timer instead");
 			return new FTimer();	
 		});
+		
 		datetime.setMethod("timer",a->new FTimer());
 		datetime.setMethod("now",a->new FNum(System.currentTimeMillis()));
 		datetime.setMethod("toTimeString",a->{
@@ -328,6 +356,7 @@ public class StdLib {
 			DateFormat df = DateFormat.getDateInstance();
 			return new FString(df.format(new Date(((FNum)ForceLang.parse(a)).longValue())));
 		});
+		
 		graphics.setMethod("canvas",a->{
 			FObj o=ForceLang.parse(a);
 			if(o instanceof FString){
@@ -339,7 +368,9 @@ public class StdLib {
 			}
 			return new FCanvas(o);
 		});
+		
 		number.setMethod("parse",a->new FNum(ForceLang.stringify(ForceLang.parse(a))));
+		
 		reflect.setMethod("setProxy",a->{
 				int i=a.lastIndexOf(" ");
 				String a1=a.substring(0,i);
@@ -353,7 +384,7 @@ public class StdLib {
 					p=new Proxy(a1,f);
 					
 				}catch(Exception e){
-						try{Module object=new Module();
+						try{
 						Class<?>clazz=null;
 						try{clazz=Class.forName(a2);}catch(Exception f){clazz=Class.forName(a2+".Main");}
 						final Method m=clazz.getMethod("proxy",String.class);
@@ -373,6 +404,8 @@ public class StdLib {
 				return p;
 			}
 		);
+		
+		//Lock nonroot STDLIB namespaces when done initializing
 		math.setImmutable();random.setImmutable();io.setImmutable();string.setImmutable();gui.setImmutable();timer.setImmutable();datetime.setImmutable();
 		graphics.setImmutable();number.setImmutable();
 	}
