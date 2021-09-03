@@ -22,6 +22,7 @@ import lang.exceptions.IllegalInvocationException;
 import java.io.File;
 
 public class FCanvas extends FObj{
+	@SuppressWarnings("serial")
 	class ImageShower extends JDialog{
 		public ImageShower(){
 			super(null,"Preview Image",ModalityType.APPLICATION_MODAL);
@@ -56,6 +57,10 @@ public class FCanvas extends FObj{
 		}));
 		this.set("setPenSize",new Function(a->{
 			penSize=((FNum)ForceLang.parse(a)).intValue();
+			return null;
+		}));
+		this.set("setPenDir",new Function(a->{
+			direction=((FNum)ForceLang.parse(a)).intValue();
 			return null;
 		}));
 		this.set("show",new Function(a->{
@@ -95,7 +100,7 @@ public class FCanvas extends FObj{
 			return new FNum(img.getWidth());
 		}));
 		this.set("getHeight",new Function(a->{
-			if(a!=null)throw new IllegalInvocationException("getWidth is a nulladic function.");
+			if(a!=null)throw new IllegalInvocationException("getHeight is a nulladic function.");
 			return new FNum(img.getHeight());
 		}));
 		this.set("turnPen",new Function(a->{
