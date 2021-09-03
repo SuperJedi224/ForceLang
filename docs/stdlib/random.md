@@ -21,3 +21,9 @@ random.seed <seed>
 ```
 
 Reseeds the RNG with the specified seed. The seed must be an integer within the 64-bit two's complement range.
+
+```
+random.randInt <limit>
+```
+
+Returns a random integer greater than or equal to 0 and less than the specified limit.
