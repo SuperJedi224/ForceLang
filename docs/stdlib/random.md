@@ -20,7 +20,7 @@ Returns a random number between 0, inclusive, and 1, exclusive, to the specified
 random.randInt <limit>
 ```
 
-Returns a random integer greater than or equal to 0 and less than the specified limit (which must be a positive integer, and in the reference implementation must not be in excess of 2<sup>31</sup>-1).
+Returns a random integer greater than or equal to 0 and less than the specified limit (which must be a positive integer, and in the reference implementation must not exceed 2<sup>31</sup>-1).
 
 **Function random.seed**
 
