@@ -10,4 +10,4 @@ The datetime module provides the following methods:
 
 `datetime.timer`: Returns a new `Timer` instance.
 
-`datetime.wait <time>`: Pause execution for approximately the specified number of milliseconds, then returns the number of milliseconds actually waited.
+`datetime.wait <time>`: Pauses execution for approximately the specified number of milliseconds, then returns the number of milliseconds actually waited.
