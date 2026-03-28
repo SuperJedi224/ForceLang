@@ -20,7 +20,7 @@ An approximation of φ. Guaranteed accurate to within one part per 10<sup>15</su
 math.sqrt <number>
 ```
 
-Returns an approximation of the square root of the specified number, using four iterations of the babylonian method.
+Returns an approximation of the square root of the specified number, by first deriving an initial estimate and then appling for iterations of the babylonian approximation.
 
 **Function math.ln**
 
