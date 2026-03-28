@@ -109,6 +109,13 @@ public class FNum extends FObj implements Comparable<FNum>{
 			}
 			throw new IllegalArgumentException("");
 		}));
+		set("div",new Function(a->{
+			FObj o=ForceLang.parse(a);
+			if(o instanceof FNum){
+				return this.divide((FNum)o);
+			}
+			throw new IllegalArgumentException("");
+		}));
 		set("pow",new Function(a->{
 			FObj o=ForceLang.parse(a);
 			if(o instanceof FNum){
