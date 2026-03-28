@@ -8,4 +8,8 @@ Infinity is encoded as `1/0`, Negative Infinity as `-1/0`, and NaN as `0/0`.
 
 A `Number` object's toString method can be called with an integer argument to give that many decimal places. Otherwise, the returned string will simply contain the exact fraction.
 
-Number objects also have the `mult` method, which returns the original number multiplied by the passed number.
+Number objects also have the following methods:
+`mult`: multiplies by the passed number
+`div`: divides by the passed number
+`pow`: raises to the passed integer power
+`toHexString`: truncates to an integer and converts that value to a hex string
